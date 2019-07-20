@@ -1,0 +1,81 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://Scripts/Player.cs" type="Script" id=1]
+[ext_resource path="res://Sprites/Sprites/Player/Jump3.png" type="Texture" id=2]
+[ext_resource path="res://Sprites/Sprites/Player/Idle0.png" type="Texture" id=3]
+[ext_resource path="res://Sprites/Sprites/Player/Run0.png" type="Texture" id=4]
+[ext_resource path="res://Sprites/Sprites/Player/Run1.png" type="Texture" id=5]
+[ext_resource path="res://Sprites/Sprites/Player/Run2.png" type="Texture" id=6]
+[ext_resource path="res://Sprites/Sprites/Player/Run3.png" type="Texture" id=7]
+[ext_resource path="res://Sprites/Sprites/Player/Run4.png" type="Texture" id=8]
+[ext_resource path="res://Sprites/Sprites/Player/Run7.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/Sprites/Player/Jump1.png" type="Texture" id=10]
+[ext_resource path="res://Scripts/ParallaxBackgroundScroll.cs" type="Script" id=11]
+[ext_resource path="res://Sprites/Sprites/Sky.png" type="Texture" id=12]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Fall",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "Idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ), ExtResource( 7 ), ExtResource( 8 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "Run",
+"speed": 10.0
+}, {
+"frames": [ ExtResource( 10 ) ],
+"loop": true,
+"name": "Jump",
+"speed": 5.0
+} ]
+
+[sub_resource type="CapsuleShape2D" id=2]
+radius = 13.0
+height = 30.0
+
+[node name="Player" type="KinematicBody2D"]
+collision_mask = 6
+script = ExtResource( 1 )
+maxSpeed = 300
+acceleration = 30
+maxJumpSeed = 500
+minJumpPercent = 0.5
+gravity = 1200
+groundFriction = 0.2
+airFriction = 0.1
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "Idle"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 4 )
+shape = SubResource( 2 )
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+script = ExtResource( 11 )
+
+[node name="BackgroundScroll" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 0.1, 0.1 )
+motion_mirroring = Vector2( 640, 640 )
+
+[node name="Sky" type="Sprite" parent="ParallaxBackground/BackgroundScroll"]
+texture = ExtResource( 12 )
+centered = false
+
+[node name="Pivot" type="Position2D" parent="."]
+
+[node name="CameraOffset" type="Position2D" parent="Pivot"]
+position = Vector2( 160, 0 )
+
+[node name="Camera2D" type="Camera2D" parent="Pivot/CameraOffset"]
+current = true
+smoothing_enabled = true
+editor_draw_drag_margin = true

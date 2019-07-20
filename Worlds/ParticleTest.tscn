@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=2]
+
+[sub_resource type="ParticlesMaterial" id=1]
+emission_shape = 2
+emission_box_extents = Vector3( 50, 1, 1 )
+flag_disable_z = true
+spread = 0.0
+gravity = Vector3( 0, 98, 0 )
+initial_velocity = 5.0
+initial_velocity_random = 1.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale = 5.0
+
+[node name="WaterfallParticle" type="Node2D"]
+position = Vector2( 0, -96 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 96, 96 )
+amount = 2000
+lifetime = 3.0
+process_material = SubResource( 1 )
